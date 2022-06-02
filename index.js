@@ -14,3 +14,7 @@ app.listen(PORT,(err)=>{
     }
     console.log("server is up and running")
 })
+
+
+//flow of routing...server is index.js prr sbse pehle aaya fir meine use routers/index.js prr bhej diya...yha se mei baaki routers prr bhejuga
+//or un routers mei unse related controller ke functions ko call kruga.routers/index.js is like a place where all the request mappings are available.
