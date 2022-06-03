@@ -1,11 +1,20 @@
 const express = require("express");
 const app = express();
+const db = require('./config/mongoose')
+const cookieParser = require('cookie-parser');//cookie needs to parsed in the middleware
+const expressLayouts = require('express-ejs-layouts');
 const PORT = 3001;
 //from this index.js i will go to routes/index.js and from there to further routes.
 
+app.use(express.urlencoded());
+// app.use(expressLayouts)
+app.use(cookieParser());
 //use express Router
 app.use('/',require('./routers/index'));
 
+//setting the view engine ejs
+app.set('view engine','ejs')
+app.set('views','./views')
 
 app.listen(PORT,(err)=>{
     if(err){

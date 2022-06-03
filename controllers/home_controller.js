@@ -1,3 +1,10 @@
 module.exports.home = (req,res) =>{
-    res.end('home controller is running');
+    //to see the cookies
+    //to modify cookies at sserver side
+    res.cookie('anirudh',25);
+    console.log(req.cookies);
+    res.render('Home',{
+        title : "anirudh"
+    });
 }
+
