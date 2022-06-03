@@ -2,10 +2,30 @@
 const User = require('../model/users');
 
 module.exports.profile = (req, res) => {
-    res.render('User_Profile', {
-        username: "anirudh",
-        email: "ani@gmail.com"
-    })
+    console.log(req.cookies.user);
+    const user_id = req.cookies.user;
+
+    if(user_id){
+        User.findById(user_id,(err,data) => {
+            if(err){
+                console.log('error occured');
+                return;
+            }
+            if(!data){
+                console.log("no user with this id present");
+                return res.redirect('back');
+            }
+            else{
+                return res.render('User_Profile',{
+                    username : data.username,
+                    email : data.email
+                })
+            }
+        })
+    }
+    else{
+        return res.redirect('/users/sign-in');
+    }
 }
 
 //to render signup page
@@ -63,5 +83,31 @@ module.exports.create = (req, res) => {
 
 //to login user
 module.exports.createSession = (req, res) => {
-    console.log(req.body);
+    //find the user
+    User.findOne({email : req.body.email},(err,user) => {
+        if(err){
+            console.log('error occured while checking user'); 
+            return;
+        }
+
+        if(!user){
+            console.log('user not present');
+            return res.redirect('back');
+        }
+        else{
+            //match the password
+            if(user.password != req.body.password){
+                console.log('user not present');
+                return res.redirect('back');
+            }
+            else{
+                //set session in cookie
+
+                res.cookie('user' , user._id);
+                return res.redirect('/users/profile');
+            }
+        }
+
+    })
+
 }
