@@ -111,3 +111,9 @@ module.exports.createSession = (req, res) => {
     })
 
 }
+
+module.exports.signOut = (req,res) =>{
+    res.clearCookie('user');
+    console.log('cookie removed');
+    res.redirect('/users/sign-in');
+}
