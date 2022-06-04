@@ -5,6 +5,12 @@
         </title>
     </head>
     <body>
-
+        <% if(locals.user){ %>
+            <a href='/users/sign-out'>signout</a>
+            <a href="/users/profile"><%=user.username%></a>
+        <%}else {%>
+            <a href='/users/sign-in'>sign in</a>
+            <a href='/users/sign-up'>sign up</a>
+        <%}%>
     </body>
 </html>
