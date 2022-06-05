@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="/css/header.css">
+<header class="navbar">
+    <div class="heading">
+        Codeial
+    </div>
+    
+    
+    <div class="options">
+        <% if (locals.user){ %>
+                <a href="/users/profile">
+                    <%= user.name %>
+                </a>
+                <a href="/users/sign-out">Sign Out</a>
+            <% }else{ %>
+                    <a href="/users/sign-in">Sign In</a>
+                    <a href="/users/sign-up">Sign Up</a>
+                <% } %>
+    </div>
+
+</header>

@@ -1,0 +1,32 @@
+header {
+  height: 40px;
+  color: white;
+  background-color: rgba(17, 136, 240, 0.979);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.75);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+header .heading {
+  margin-left: 20px;
+  font-weight: 600;
+  font-size: larger;
+}
+
+a {
+  text-decoration: none;
+  margin-right: 20px;
+  color: white;
+}
+
+a:hover {
+  color: #1010e4;
+}

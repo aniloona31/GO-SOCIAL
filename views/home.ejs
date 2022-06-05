@@ -1,16 +1,11 @@
-<html>
-    <head>
-        <title>
-            GO-SOCIAL <%=title%>
-        </title>
-    </head>
-    <body>
-        <% if(locals.user){ %>
-            <a href='/users/sign-out'>signout</a>
-            <a href="/users/profile"><%=user.username%></a>
-        <%}else {%>
-            <a href='/users/sign-in'>sign in</a>
-            <a href='/users/sign-up'>sign up</a>
-        <%}%>
-    </body>
-</html>
+<h1>
+    Codeial / <%= title %>
+</h1>
+
+<section id="feed-post">
+    <h4>Posts</h4>
+    <form id="new-post-form" action="" method="post">
+        <textarea name="content" cols="30" rows="3"></textarea>
+        <input type="submit" value="Post">
+    </form>
+</section>
