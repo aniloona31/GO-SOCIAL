@@ -33,3 +33,29 @@ module.exports.addComment = (req,res) => {
         })
     }
 }
+
+module.exports.deleteComment = (req,res) =>{
+    const commentId = req.params.id;
+    Comment.findById(commentId,((err,comment)=>{
+        if(err){
+            console.log('comment not found');
+            return;
+        }
+        //this way uses mongodb syntax and is better.
+        Post.findByIdAndUpdate(comment.post,{$pull : {comments : commentId}},(err,post) => {
+        });
+        //this uses  the normal java script method.
+        // Post.findById(comment.post,(err,post) => {
+        //     const idx = post.comments.findIndex((id) => id.equals(commentId));
+        //     console.log(idx);
+        //     if(idx == -1){
+        //         return res.redirect('/');
+        //     }
+        //     post.comments.splice(idx,1);
+        //     post.save();
+        // })
+        comment.remove();
+        
+    }))
+    res.redirect('/');
+}

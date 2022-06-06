@@ -1,4 +1,5 @@
 const Post = require('../model/Post');
+const User = require('../model/User');
 module.exports.home = (req, res) => {
     // isme na sirf mujhe id likhi hui mil rhi h...postgres mei kya ho rha tha ki vo apne aap populate hojate the 
     // mtlb meine reference create ki 2 tables mei table mei id dikh rhi h sirf prr jb mei query krta tha tbb sirf id
@@ -31,9 +32,13 @@ module.exports.home = (req, res) => {
             console.log('error occured while fetching posts');
             return;
         }
-        return res.render('home', {
-            title: "home",
-            posts: posts
+        User.find({},(err,users) => {
+
+            return res.render('home', {
+                title: "home",
+                posts: posts,
+                all_users : users
+            })
         })
     })
 }

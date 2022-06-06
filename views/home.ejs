@@ -2,40 +2,53 @@
     Codeial / <%= title %>
 </h1>
 <%if(locals.user){%>
-<section id="feed-post">
-    <h4>Posts</h4>
-    <form id="new-post-form" action="/posts/create-post" method="post">
-        <textarea name="content" placeholder="Type here..." cols="30" rows="3"></textarea>
-        <input type="submit" value="Post">
-    </form>
+    <section id="feed-post">
+        <h4>Posts</h4>
+        <form id="new-post-form" action="/posts/create-post" method="post">
+            <textarea name="content" placeholder="Type here..." cols="30" rows="3"></textarea>
+            <input type="submit" value="Post">
+        </form>
 
-    <div class="posts-list-container">
-        <ul>
-            <%for(let i of posts){%>
-                <li>
-                    <%=i.user.username%>
-                    <br>
-                    <%=i.content%>
-                </li>
-                <div class="posts-comments-list">
-                    <ul class="post-comments-<%=i._id%>">
-                    <% for (let j of i.comments) {%>
-                        <li>
-                            <%=j.user.username%> => 
-                            <%=j.comment%>
-                        </li>
+        <div class="posts-list-container">
+            <ul>
+                <%for(let i of posts){%>
+                    <li>
+                        <%=i.user.username%>
+                            <br>
+                            <%=i.content%>
+                    </li>
+                    <div class="posts-comments-list">
+                        <ul class="post-comments-<%=i._id%>">
+                            <%if(i.user.equals(locals.user._id)){%>
+                                <a class="delete" href="/posts/delete/<%=i._id%>">delete</a>
+                            <%}%>
+                            <% for (let j of i.comments) {%>
+                                <li>
+                                    <%=j.user.username%> =>
+                                        <%=j.comment%>
+                                    <%if(locals.user._id.equals(j.user._id) || locals.user._id.equals(i.user._id)) {%>
+                                        <a class="delete" href="/comments/delete-comment/<%=j._id%>">delete comment</a>
+                                    <%}%>
+                                </li>
+                            <%}%>
+                        </ul>
+                    </div>
+                    <h5>Add comment</h5>
+                    <form id="new-post-form" action="/comments/comment/?id=<%=i._id%>" method="post">
+                        <textarea name="comment" placeholder="comment here..." cols="30" rows="1"></textarea>
+                        <input type="submit" value="Post">
+                    </form>
                     <%}%>
-                    </ul>
-                </div>
-                <h5>Add comment</h5>
-                <form id="new-post-form" action="/comments/comment/?id=<%=i._id%>" method="post">
-                    <textarea name="comment" placeholder="comment here..." cols="30" rows="1"></textarea>
-                    <input type="submit" value="Post">
-                </form>
-            <%}%>
-        </ul>
-    </div>
+            </ul>
+        </div>
 
-</section>
-<%}%>
-
+    </section>
+    <section class="user-friends">
+        <h4>Friends</h4>
+        <%for(u of all_users){%>
+            <p>
+                <a class="Friends" href="/users/profile/<%=u._id%>"><%=u.username%></a>
+            </p>
+        <%}%>
+    </section>
+    <%}%>

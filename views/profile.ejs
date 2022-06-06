@@ -2,6 +2,9 @@
 <h1>
     Codeial / Profile Page
 </h1>
-
-<p><%= user.name %></p>
-<p><%= user.email %></p>
+<%if(locals.user._id.equals(selected_user._id)){%>
+    <p>update options</p>
+<%}else{%>
+    <p><%= selected_user.username %></p>
+    <p><%= selected_user.email %></p>
+<%}%>

@@ -30,3 +30,11 @@ a {
 a:hover {
   color: #1010e4;
 }
+
+.delete {
+  color: red;
+}
+
+.friends {
+  color: green;
+}

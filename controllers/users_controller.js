@@ -2,10 +2,18 @@
 const User = require('../model/User');
 
 module.exports.profile = (req, res) => {
-    return res.render('profile',{
-        // username : req.user.username,
-        // email : req.user.email
+    const userId = req.params.id;
+    User.findById(userId,(err,user) => {
+        if(user){
+            res.render('profile',{
+                selected_user : user
+            })
+        }
+        else{
+            res.redirect('/');
+        }
     })
+    // res.redirect('/')
 }
 
 //to render signup page
