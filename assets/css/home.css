@@ -1,0 +1,20 @@
+.entire-home {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.feed-post {
+  flex: 70%;
+  padding: 20px;
+  background-color: aquamarine;
+  height: 100vh;
+}
+
+.user-friends {
+  flex: 30%;
+  padding: 20px;
+  background-color: azure;
+  height: 100vh;
+}

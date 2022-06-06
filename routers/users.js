@@ -10,6 +10,7 @@ router.get('/sign-in',users_controller.signIn);
 router.get('/sign-up',users_controller.signUp);
 router.get('/sign-out',users_controller.signOut);
 router.post('/create',users_controller.create);
+router.post('/profile-update/:id',passport.checkAuthentication,users_controller.modifyUser);
 
 //use passport as a middleware to authenticate
 router.post('/create-session',passport.authenticate(

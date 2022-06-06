@@ -95,3 +95,18 @@ module.exports.signOut = (req,res,next) =>{
         res.redirect('/');
     });
 }
+
+module.exports.modifyUser = (req,res) =>{
+    const userId = req.params.id;
+    if(req.user.id == userId){
+        User.findByIdAndUpdate(userId,{
+            username : req.body.username,
+            email : req.body.email
+        },(err,user)=>{
+            return res.redirect('back');
+        })
+    }
+    else{
+        return res.status(401).send('unauthorized');
+    }
+}
