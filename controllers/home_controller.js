@@ -17,7 +17,16 @@ module.exports.home = (req, res) => {
     // })
     // populatng user in the posts document
     // populate mei key ka naam dalaege or uske schema mei ref hona jaroori h
-    Post.find({}).populate('user').exec((err, posts) => {
+    // populating multiple models means ek saath multiple models pupulate krna like nested pupulation(comment populate kiya comment ke andr ka user populate kiya)
+    Post.find({})
+    .populate('user')
+    .populate({
+        path : 'comments',
+        populate : {
+            path : 'user'
+        }
+    })
+    .exec((err, posts) => {
         if (err) {
             console.log('error occured while fetching posts');
             return;

@@ -5,5 +5,4 @@ const passport  = require('passport');
 
 router.get('/',posts_controller.posts);
 router.post('/create-post',passport.checkAuthentication,posts_controller.createPost);
-router.post('/comment/',passport.checkAuthentication,posts_controller.addComment);
 module.exports = router;

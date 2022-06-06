@@ -17,15 +17,24 @@
                     <br>
                     <%=i.content%>
                 </li>
+                <div class="posts-comments-list">
+                    <ul class="post-comments-<%=i._id%>">
+                    <% for (let j of i.comments) {%>
+                        <li>
+                            <%=j.user.username%> => 
+                            <%=j.comment%>
+                        </li>
+                    <%}%>
+                    </ul>
+                </div>
                 <h5>Add comment</h5>
-                <form id="new-post-form" action="/posts/comment/?id=<%=i._id%>" method="post">
+                <form id="new-post-form" action="/comments/comment/?id=<%=i._id%>" method="post">
                     <textarea name="comment" placeholder="comment here..." cols="30" rows="1"></textarea>
                     <input type="submit" value="Post">
                 </form>
             <%}%>
         </ul>
     </div>
-
 
 </section>
 <%}%>

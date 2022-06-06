@@ -1,5 +1,4 @@
 const Post = require('../model/Post');
-const Comment = require('../model/Comment');
 module.exports.posts = (req,res) =>{
     return res.end('here are the posts');
 }
@@ -19,18 +18,3 @@ module.exports.createPost = (req,res) => {
     return res.redirect('back');
 }
 
-module.exports.addComment = (req,res) => {
-    if(req.isAuthenticated()){
-        Comment.create({
-            user : req.user._id,
-            comment : req.body.comment,
-            post : req.query.id
-        }),(err,data)=>{
-            if(err){
-                console.log('error while adding comment to db');
-                return;
-            }
-        }
-        return res.redirect('back');
-    }
-}
