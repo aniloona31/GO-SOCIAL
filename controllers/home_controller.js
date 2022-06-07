@@ -47,8 +47,8 @@ module.exports.home = async (req, res) => {
         const posts = await Post.find({}).populate('user').populate({ path: 'comments', populate: { path: 'user' } });
         const users = await User.find({});
 
-        console.log(users);
-        console.log(posts);
+        // console.log(users);
+        // console.log(posts);
         return res.render('home', {
             title: "home",
             posts: posts,

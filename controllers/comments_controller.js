@@ -1,21 +1,21 @@
 const Comment = require('../model/Comment');
 const Post = require('../model/Post');
-module.exports.addComment = (req,res) => {
-    
-    if(req.isAuthenticated()){
+module.exports.addComment = (req, res) => {
+
+    if (req.isAuthenticated()) {
         console.log("i am here")
         const postId = req.query.id;
-        Post.findById(postId,(err,post) => {
+        Post.findById(postId, (err, post) => {
             // console.log(post);
-            if(post){
+            if (post) {
                 Comment.create({
-                    user : req.user._id,
-                    post : postId,
-                    comment : req.body.comment
-                },(err,data) => {
+                    user: req.user._id,
+                    post: postId,
+                    comment: req.body.comment
+                }, (err, data) => {
                     // console.log("error"  + err);
                     // console.log("data",data);
-                    if(data){
+                    if (data) {
                         // console.log(data);
                         //i have the post so i need not find it.
                         // Post.findByIdAndUpdate(postId,{$push : {"comments" : data._id}},(err,post)=>{
@@ -34,16 +34,12 @@ module.exports.addComment = (req,res) => {
     }
 }
 
-module.exports.deleteComment = (req,res) =>{
+module.exports.deleteComment = async (req, res) => {
     const commentId = req.params.id;
-    Comment.findById(commentId,((err,comment)=>{
-        if(err){
-            console.log('comment not found');
-            return;
-        }
-        //this way uses mongodb syntax and is better.
-        Post.findByIdAndUpdate(comment.post,{$pull : {comments : commentId}},(err,post) => {
-        });
+    try {
+        let comment = await Comment.findById(commentId);
+
+        await Post.findByIdAndUpdate(comment.post, { $pull: { comments: commentId } });
         //this uses  the normal java script method.
         // Post.findById(comment.post,(err,post) => {
         //     const idx = post.comments.findIndex((id) => id.equals(commentId));
@@ -55,7 +51,10 @@ module.exports.deleteComment = (req,res) =>{
         //     post.save();
         // })
         comment.remove();
-        
-    }))
-    res.redirect('/');
+        return res.redirect('/');
+
+    } catch (err) {
+        console.log('error occured');
+        return;
+    }
 }

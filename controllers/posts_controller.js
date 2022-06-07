@@ -4,19 +4,25 @@ module.exports.posts = (req, res) => {
     return res.end('here are the posts');
 }
 
-module.exports.createPost = (req, res) => {
-    if (req.isAuthenticated()) {
-        Post.create({
+module.exports.createPost = async (req, res) => {
+    try {
+        let post = await Post.create({
             content: req.body.content,
             user: req.user._id
-        }), (err, data) => {
-            if (err) {
-                console.log('error occured while creating post');
-                return;
-            }
+        })
+
+        if (req.xhr) {
+            return res.status(200).json({
+                data : {
+                    post: post
+                },
+                message : "post created"
+            })
         }
+        // return res.redirect('back');
+    } catch (err) {
+        return res.status(401).send('post not created');
     }
-    return res.redirect('back');
 }
 
 module.exports.deletePost = async (req, res) => {
