@@ -2,10 +2,13 @@
 <h1>
     Codeial / Profile Page
 </h1>
+<img class="avatar" src="<%=user.avatar%>" alt="image not loaded">
 <%if(locals.user._id.equals(selected_user._id)){%>
-    <form action="/users/profile-update/<%=selected_user._id%>" method="post">
+    <form action="/users/profile-update/<%=selected_user._id%>" enctype="multipart/form-data" method="post">
         <input value="<%=selected_user.username%>" name="username" type="text">
         <input value="<%=selected_user.email%>" name="email" type="email">
+
+        <input type="file" name="avatar" placeholder="Profile Picture">
         <input type="submit" placeholder="submit">
     </form>
 <%}else{%>

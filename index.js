@@ -61,7 +61,8 @@ app.use(passport.setAuthenticatedUser);
 
 //routes should be initialized after this passport vaaali cheeze. order does matter.
 app.use('/',require('./routers/index'));
-
+//make the uploads path available to the browser
+app.use('/uploads',express.static(__dirname + '/uploads'));
 
 
 app.listen(PORT,(err)=>{

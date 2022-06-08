@@ -44,7 +44,7 @@ module.exports.home = async (req, res) => {
 
     //using async await for a cleaner code.posts store the any responce being returned from the querry.
     try {
-        const posts = await Post.find({}).populate('user').populate({ path: 'comments', populate: { path: 'user' } });
+        const posts = await Post.find({}).sort('-createdAt').populate('user').populate({ path: 'comments', populate: { path: 'user' } });
         const users = await User.find({});
 
         // console.log(users);
