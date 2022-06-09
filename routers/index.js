@@ -12,6 +12,7 @@ router.get('/',home_controller.home);
 router.use('/users',require('./users'));
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));
+router.use('/api',require('./Api'));
 router.get('/about',about_controller.about)
 
 module.exports = router;
