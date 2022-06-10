@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
 const passportLocal = require('./config/passport-local-strategy');
 const passportJwt = require('./config/passport-jwt-strategy');
+const googleStrategy = require('./config/passport-google-Oauth2-strategy');
 const PORT = 3001;
 //from this index.js i will go to routes/index.js and from there to further routes.
 
