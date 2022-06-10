@@ -28,12 +28,14 @@ module.exports.deletePost = async (req, res) => {
     try {
         let post = await Post.findById(postId);
 
-
-        await Comment.deleteMany({ post: postId });
-        post.remove();
-
-
-        delete res.status(200).send('deleted');
+        if(post.user == req.user.id){
+            await Comment.deleteMany({ post: postId });
+            post.remove();
+            return res.status(200).send('deleted');
+        }
+        else{
+            return res.status(401).send("unauthorized");
+        }
     } catch (err) {
         console.log('error occred');
         return res.status(500).send("some error occured");

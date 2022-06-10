@@ -3,11 +3,13 @@ const app = express();
 const db = require('./config/mongoose')
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJwt = require('./config/passport-jwt-strategy');
 const PORT = 3001;
 //from this index.js i will go to routes/index.js and from there to further routes.
 
@@ -20,7 +22,8 @@ app.use(sassMiddleware({
     prefix : '/css'
 }))
 
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 //use express Router
 

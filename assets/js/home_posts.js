@@ -42,7 +42,7 @@
         <textarea name="comment" placeholder="comment here..." cols="30" rows="1"></textarea>
         <input type="submit" value="Post">
     </form>
-    <%}%>`)
+    `)
     }
 
     //writting the function is good but dont forget calling the function.
