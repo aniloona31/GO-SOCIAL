@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const users_controller = require('../controllers/users_controller');
+const verification_controller = require('../controllers/verification_controller');
 
 router.get('/profile/:id',passport.checkAuthentication,users_controller.profile);
 router.get('/sign-in',users_controller.signIn);
@@ -20,5 +21,9 @@ router.post('/create-session',passport.authenticate(
 
 router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/users/sign-in'}), users_controller.createSession);
+router.get('/reset-password',verification_controller.redirectToReset);
+router.post('/send-reset-mail',verification_controller.resetPassword);
+router.get('/reset/:token',verification_controller.verify);
+router.post('/update-password',verification_controller.updatePassword);
 
 module.exports = router;
