@@ -59,15 +59,23 @@ module.exports.deletePost = async (req, res) => {
     // });
     try {
         let post = await Post.findById(postId);
+        
+        await Like.deleteMany({'likeable' : postId});
+
 
         if (post.user.equals(req.user._id)) {
-            let comment = await Comment.deleteMany({ post: postId });
+            // let comment = await Comment.deleteMany({ post: postId });
+            let comments = await Comment.find({ post: postId });
+            comments.forEach(async (comment) => {
+                await Like.deleteMany({'likeable' : comment._id});
+                comment.remove();
+            })
             post.remove();
         }
 
         res.redirect('/');
     } catch (err) {
-        console.log('error occred');
+        console.log('error occred',err);
         return;
     }
 }

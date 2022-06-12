@@ -52,7 +52,8 @@ module.exports.deleteComment = async (req, res) => {
         //     post.comments.splice(idx,1);
         //     post.save();
         // })
-        comment.remove();
+        await Like.deleteMany({'likeable' :  commentId});
+        // comment.remove();
         return res.redirect('/');
 
     } catch (err) {

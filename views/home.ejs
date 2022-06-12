@@ -26,7 +26,7 @@
                                         <a class="delete" href="/posts/delete/<%=i._id%>">delete</a>
                                     <%}%>
                                     <p>
-                                        <a href="/posts/like-post/<%=i._id%>">like</a>
+                                        <a href="/posts/like-post/<%=i._id%>">like <%=i.likes.length%></a>
                                     </p>
                                     <% for (let j of i.comments) {%>
                                         <li>
@@ -36,7 +36,7 @@
                                             <a class="delete" href="/comments/delete-comment/<%=j._id%>">delete comment</a>
                                         <%}%>
                                         <p>
-                                            <a href="/comments/like-comment/<%=j._id%>">like</a>
+                                            <a href="/comments/like-comment/<%=j._id%>">like <%=j.likes.length%></a>
                                         </p>
                                         </li>
                                     <%}%>
