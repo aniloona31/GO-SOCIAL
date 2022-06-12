@@ -83,11 +83,13 @@ module.exports.likeComment = async (req, res) => {
         comment.save();
     }
     else{
-        let idx = comment.likes.findIndex((like) => like.equals(checkLike._id));
-        if(idx != -1){
-            comment.likes.splice(idx,1);
-            comment.save();
-        }
+        // let idx = comment.likes.findIndex((like) => like.equals(checkLike._id));
+        // if(idx != -1){
+        //     comment.likes.splice(idx,1);
+        //     comment.save();
+        // }
+        comment.likes.pull(checkLike._id);
+        comment.save();
         checkLike.remove();
     }
 
