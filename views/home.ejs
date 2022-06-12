@@ -17,26 +17,29 @@
                         <%for(let i of posts){%>
                             <li id="post-<%=i._id%>">
                                 <%=i.user.username%>
-                                    <br>
-                                    <%=i.content%>
+                                <br>
+                                <%=i.content%>
                             </li>
                             <div class="posts-comments-list">
                                 <ul class="post-comments-<%=i._id%>">
                                     <%if(i.user.equals(locals.user._id)){%>
                                         <a class="delete" href="/posts/delete/<%=i._id%>">delete</a>
+                                    <%}%>
+                                    <p>
+                                        <a href="/posts/like-post/<%=i._id%>">like</a>
+                                    </p>
+                                    <% for (let j of i.comments) {%>
+                                        <li>
+                                        <%=j.user.username%> =>
+                                        <%=j.comment%>
+                                        <%if(locals.user._id.equals(j.user._id) || locals.user._id.equals(i.user._id)) {%>
+                                            <a class="delete" href="/comments/delete-comment/<%=j._id%>">delete comment</a>
                                         <%}%>
-                                            <% for (let j of i.comments) {%>
-                                                <li>
-                                                    <%=j.user.username%> =>
-                                                        <%=j.comment%>
-                                                            <%if(locals.user._id.equals(j.user._id) ||
-                                                                locals.user._id.equals(i.user._id)) {%>
-                                                                <a class="delete"
-                                                                    href="/comments/delete-comment/<%=j._id%>">delete
-                                                                    comment</a>
-                                                                <%}%>
-                                                </li>
-                                                <%}%>
+                                        <p>
+                                            <a href="/comments/like-comment/<%=j._id%>">like</a>
+                                        </p>
+                                        </li>
+                                    <%}%>
                                 </ul>
                             </div>
                             <h5>Add comment</h5>

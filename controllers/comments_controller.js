@@ -3,18 +3,19 @@ const Post = require('../model/Post');
 const commentMailer = require('../mailer/comments_mailer');
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_worker');
+const Like = require('../model/Like');
 
-module.exports.addComment = async(req, res) => {
+module.exports.addComment = async (req, res) => {
 
     if (req.isAuthenticated()) {
         // console.log("i am here")
         const postId = req.query.id;
         const post = await Post.findById(postId);
-        if(post){
+        if (post) {
             const comment = await Comment.create({
-                user : req.user._id,
-                post : postId,
-                comment : req.body.comment
+                user: req.user._id,
+                post: postId,
+                comment: req.body.comment
             });
             // console.log(comment);
             post.comments.push(comment._id);
@@ -22,8 +23,8 @@ module.exports.addComment = async(req, res) => {
             await comment.populate('user');
             // console.log(comment);
             // commentMailer.newComment(comment);
-            let job = queue.create('emails',comment).save((err) => {
-                if(err){
+            let job = queue.create('emails', comment).save((err) => {
+                if (err) {
                     console.log(err);
                     return;
                 }
@@ -58,4 +59,37 @@ module.exports.deleteComment = async (req, res) => {
         console.log('error occured');
         return;
     }
+}
+
+module.exports.likeComment = async (req, res) => {
+    const commentId = req.params.id;
+
+    let comment = await Comment.findById(commentId);
+
+    if (!comment) {
+        console.log("no such post exists");
+        return res.redirect('back');
+    }
+
+    let checkLike = await Like.findOne({ 'user': req.user._id, 'likeable': commentId });
+    if (!checkLike) {
+        let like = await Like.create({
+            user: req.user._id,
+            likeable: commentId,
+            onModel: 'Comment'
+        })
+
+        comment.likes.push(like._id);
+        comment.save();
+    }
+    else{
+        let idx = comment.likes.findIndex((like) => like.equals(checkLike._id));
+        if(idx != -1){
+            comment.likes.splice(idx,1);
+            comment.save();
+        }
+        checkLike.remove();
+    }
+
+    return res.redirect('back');
 }
